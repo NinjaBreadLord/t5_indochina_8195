@@ -1,18 +1,17 @@
 package com.nighthawk.spring_portfolio.mvc.calendar;
 
 // Prototype Implementation
-
+import java.util.*;
+import java.time.*;
 public class APCalendar {
 
-    /** Returns true if year is a leap year and false otherwise.
-     * isLeapYear(2019) returns False
-     * isLeapYear(2016) returns True
-     */          
     public static boolean isLeapYear(int year) {
-        // implementation not shown
-
-        return false;
+        if((year % 4) == 0){
+            return true;
+        }else{
+            return false;
         }
+    }
         
     /** Returns the value representing the day of the week 
      * 0 denotes Sunday, 
@@ -21,11 +20,24 @@ public class APCalendar {
      * firstDayOfYear(2019) returns 2 for Tuesday.
     */
     private static int firstDayOfYear(int year) {
-        // implementation not shown
-
-        return 0;
-        }
-
+        Calendar calenobj = Calendar.getInstance();
+        calenobj.add(Calendar.YEAR, 2021);
+        calenobj.add(Calendar.MONTH, 1);
+        calenobj.add(Calendar.DAY_OF_WEEK, 1);
+        // Map<String, String> days2 = new HashMap<String, String>();
+        Map<String, Integer> map = new HashMap<String, Integer>(){{
+            put("Sun",0);
+            put("Mon",1);
+            put("Tue",2);
+            put("Wed",3);
+            put("Thu",4);
+            put("Fri",5);
+            put("Sat",6);
+        }};
+        String day = (calenobj.getTime()).toString();
+        String days = day.substring(0,3);
+        return (map.get(days));
+    }
 
     /** Returns n, where month, day, and year specify the nth day of the year.
      * This method accounts for whether year is a leap year. 
@@ -34,8 +46,12 @@ public class APCalendar {
      * dayOfYear(3, 1, 2016) returns 61, since 2016 is a leap year. 
     */ 
     private static int dayOfYear(int month, int day, int year) {
-        // implementation not shown
+        Month monthString = Month.of(month);
+        if(isLeapYear(year)){
+            return monthString;
+        }else{
 
+        }
         return 1;
         }
 
