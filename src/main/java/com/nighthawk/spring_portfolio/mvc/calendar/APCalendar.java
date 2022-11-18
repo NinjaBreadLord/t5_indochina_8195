@@ -20,13 +20,13 @@ public class APCalendar {
         calenobj.add(Calendar.DAY_OF_WEEK, 1);
         //Dictionary/hashmap for the first three letters to numbers
         Map<String, Integer> map = new HashMap<String, Integer>(){{
-            put("Sun",0);
-            put("Mon",1);
-            put("Tue",2);
-            put("Wed",3);
-            put("Thu",4);
-            put("Fri",5);
-            put("Sat",6);
+            put("Sun",1);
+            put("Mon",2);
+            put("Tue",3);
+            put("Wed",4);
+            put("Thu",5);
+            put("Fri",6);
+            put("Sat",0);
         }};
         String day = (calenobj.getTime()).toString();
         String days = day.substring(0,3);
@@ -64,13 +64,13 @@ public class APCalendar {
         calenobj.add(Calendar.MONTH, month - 1); //month begins on index 0
         calenobj.add(Calendar.DAY_OF_WEEK, day);
         Map<String, Integer> map = new HashMap<String, Integer>(){{
-            put("Sun",0);
-            put("Mon",1);
-            put("Tue",2);
-            put("Wed",3);
-            put("Thu",4);
-            put("Fri",5);
-            put("Sat",6);
+            put("Sun",1);
+            put("Mon",2);
+            put("Tue",3);
+            put("Wed",4);
+            put("Thu",5);
+            put("Fri",6);
+            put("Sat",0);
         }};
         String currentDay = (calenobj.getTime()).toString();
         String days = currentDay.substring(0,3);
