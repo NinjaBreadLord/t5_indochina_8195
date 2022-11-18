@@ -13,7 +13,7 @@ public class APCalendar {
         }
     }
 
-    private static int firstDayOfYear(int year) {
+    public static int firstDayOfYear(int year) {
         Calendar calenobj = Calendar.getInstance();
         calenobj.add(Calendar.YEAR, year);
         calenobj.add(Calendar.MONTH, 0); //month begins on index 0
@@ -33,7 +33,7 @@ public class APCalendar {
         return (map.get(days));
     }
 
-    private static int dayOfYear(int month, int day, int year) {
+    public static int dayOfYear(int month, int day, int year) {
         //create new imported Java object that uses the calendar
         Calendar cal = new GregorianCalendar();
         cal.setTime(new Date(year,month-1,day)); //month begins on index 0
