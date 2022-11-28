@@ -45,6 +45,7 @@ class Year {
    public String isLeapYearToString(){
       return ( "{ \"year\": "  +this.year+  ", " + "\"isLeapYear\": "  +this.isLeapYear+ ", " + "\"firstDayOfYear\": " +this.firstDayOfYear+ "}" );
    }
+   
    /* standard toString placeholder until class is extended */
    public String toString() {
       return isLeapYearToString();
