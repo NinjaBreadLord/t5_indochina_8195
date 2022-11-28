@@ -1,14 +1,11 @@
 package com.nighthawk.spring_portfolio.mvc.person;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 import java.text.SimpleDateFormat;
-
 @RestController
 @RequestMapping("/api/person")
 public class PersonApiController {
@@ -16,11 +13,9 @@ public class PersonApiController {
     #### RESTful API ####
     Resource: https://spring.io/guides/gs/rest-service/
     */
-
     // Autowired enables Control to connect POJO Object through JPA
     @Autowired
     private PersonJpaRepository repository;
-
     /*
     GET List of People
      */
@@ -28,7 +23,6 @@ public class PersonApiController {
     public ResponseEntity<List<Person>> getPeople() {
         return new ResponseEntity<>( repository.findAllByOrderByNameAsc(), HttpStatus.OK);
     }
-
     /*
     GET individual Person using ID
      */
@@ -40,9 +34,13 @@ public class PersonApiController {
             return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
         }
         // Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
+    @GetMapping("/{age}")
+    public ResponseEntity<Person> getAge() {
+        return getAge();
+    }
+    
     /*
     DELETE individual Person using ID
      */
@@ -55,9 +53,8 @@ public class PersonApiController {
             return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
         }
         // Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
     /*
     POST Aa record by Requesting Parameters from URI
      */
@@ -65,7 +62,9 @@ public class PersonApiController {
     public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
                                              @RequestParam("password") String password,
                                              @RequestParam("name") String name,
-                                             @RequestParam("dob") String dobString) {
+                                             @RequestParam("dob") String dobString,
+                                             @RequestParam("height") int height,
+                                             @RequestParam("weight") int weight) {
         Date dob;
         try {
             dob = new SimpleDateFormat("MM-dd-yyyy").parse(dobString);
@@ -73,11 +72,10 @@ public class PersonApiController {
             return new ResponseEntity<>(dobString +" error; try MM-dd-yyyy", HttpStatus.BAD_REQUEST);
         }
         // A person object WITHOUT ID will create a new record with default roles as student
-        Person person = new Person(email, password, name, dob);
+        Person person = new Person(email, password, name, dob, height, weight);
         repository.save(person);
         return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
     }
-
     /*
     The personSearch API looks across database for partial match to term (k,v) passed by RequestEntity body
      */
@@ -85,25 +83,31 @@ public class PersonApiController {
     public ResponseEntity<Object> personSearch(@RequestBody final Map<String,String> map) {
         // extract term from RequestEntity
         String term = (String) map.get("term");
-
         // JPA query to filter on term
         List<Person> list = repository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(term, term);
-
         // return resulting list and status, error checking should be added
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
     /*
-    The personStats API adds stats by Date to Person table 
+    The personStats API adds stats by Date to Person table
     */
+    @GetMapping("/toString/{id}")
+        public String personToString(@PathVariable long id) {
+            Optional<Person> optional = repository.findById(id);
+            if (optional.isPresent()) {
+                Person person = optional.get();
+                String toStringOutput = person.toString();
+                return toStringOutput;
+            }
+            return "No person exists";
+        }
     @PostMapping(value = "/setStats", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Person> personStats(@RequestBody final Map<String,Object> stat_map) {
         // find ID
-        long id=Long.parseLong((String)stat_map.get("id"));  
+        long id=Long.parseLong((String)stat_map.get("id"));
         Optional<Person> optional = repository.findById((id));
         if (optional.isPresent()) {  // Good ID
             Person person = optional.get();  // value from findByID
-
             // Extract Attributes from JSON
             Map<String, Object> attributeMap = new HashMap<>();
             for (Map.Entry<String,Object> entry : stat_map.entrySet())  {
@@ -111,19 +115,16 @@ public class PersonApiController {
                 if (!entry.getKey().equals("date") && !entry.getKey().equals("id"))
                     attributeMap.put(entry.getKey(), entry.getValue());
             }
-
             // Set Date and Attributes to SQL HashMap
             Map<String, Map<String, Object>> date_map = new HashMap<>();
             date_map.put( (String) stat_map.get("date"), attributeMap );
-            person.setStats(date_map);  // BUG, needs to be customized to replace if existing or append if new
+            date_map.putAll(person.getStats());
+            person.setStats(date_map);  
             repository.save(person);  // conclude by writing the stats updates
-
             // return Person with update Stats
             return new ResponseEntity<>(person, HttpStatus.OK);
         }
         // return Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
-        
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
 }
