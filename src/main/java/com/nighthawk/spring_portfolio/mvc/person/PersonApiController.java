@@ -36,9 +36,15 @@ public class PersonApiController {
         // Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    @GetMapping("/{age}")
-    public ResponseEntity<Person> getAge() {
-        return getAge();
+    @GetMapping("/getAge/{id}")
+    public String getAge(@PathVariable long id) {
+        Optional<Person> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Person person = optional.get();
+            String ageStringOutput = person.ageString();
+            return ageStringOutput;
+        }
+        return "Error";
     }
     
     /*
