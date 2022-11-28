@@ -36,6 +36,10 @@ public class PersonApiController {
         // Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    @GetMapping("/{age}")
+    public ResponseEntity<Person> getAge() {
+        return getAge();
+    }
     
     /*
     DELETE individual Person using ID
