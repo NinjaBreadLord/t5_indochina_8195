@@ -174,8 +174,7 @@ public class Calculator {
         Stack<Double> calcStack = new Stack<Double>();
         // RPN is processed, ultimately calcStack has final result
         if(balancedParenthensies(reverse_polish) == true){
-        for (String token : this.reverse_polish)
-            {
+            for (String token : this.reverse_polish){
                 // If the token is an operator, calculate
                 if (isOperator(token))
                 {
@@ -215,9 +214,10 @@ public class Calculator {
                     calcStack.push(Double.valueOf(token));
                 }
                 }
+                this.result = calcStack.pop();
+            }else {
+                System.out.println("Unbalanced");
             }
-        // Pop final result and set as final result for expression
-        this.result = calcStack.pop();
     }
    
     // Print the expression, terms, and result
