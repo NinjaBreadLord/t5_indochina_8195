@@ -26,7 +26,9 @@ public class Calculator {
         OPERATORS.put("％", 3);
         OPERATORS.put("+", 4);
         OPERATORS.put("-", 4);
-        OPERATORS.put("^", 1);
+        OPERATORS.put("^", 3);
+        OPERATORS.put("sqrt", 1);
+        OPERATORS.put("GCD", 4);
 
     }
     // Helper definition for supported operators
@@ -68,18 +70,13 @@ public class Calculator {
             } else if (tokens.get(i).equals(")")) {
                 closeCount++;
             }
-
-            // First condition is broken
             if (openCount < closeCount) {
                 return false;
             }
         }
-        // First and second condition are both met
-        if (openCount == closeCount) {
+            if (openCount == closeCount) {
             return true;
         } 
-        
-        // Second condition is broken
         else {
             return false;
         }
@@ -137,13 +134,15 @@ public class Calculator {
                     {
                         reverse_polish.add( tokenStack.pop() );
                     }
-                    tokenStack.pop();
+                    tokenStack.pop();   
                     break;
                 case "^":
                 case "+":
                 case "-":
                 case "*":
                 case "除":
+                case "GCD":
+                case "sqrt":
                 case "％":
                     // While stack
                     // not empty AND stack top element
@@ -169,12 +168,11 @@ public class Calculator {
         }
     }
     // Takes RPN and produces a final result
-    private void rpnToResult()
-    {
-        // stack is used to hold operands and each calculation
-        Stack<Double> calcStack = new Stack<Double>();
-        // RPN is processed, ultimately calcStack has final result
-        if(balancedParenthensies(this.tokens)){
+    private void rpnToResult(){
+        try{ 
+            // stack is used to hold operands and each calculation
+            Stack<Double> calcStack = new Stack<Double>();
+            // RPN is processed, ultimately calcStack has final result
             for (String token : this.reverse_polish){
                 // If the token is an operator, calculate
                 if (isOperator(token))
@@ -203,6 +201,19 @@ public class Calculator {
                         case "^":
                             result = Math.pow(ent2, ent1);
                             break;
+                            case "sqrt":
+                            result = Math.pow(ent2, (1/ent1));
+                            break;
+                        case "GCD":
+                            int gcd = 1;
+                            for (int i = 1; i <= ent2 && i <= ent1; i++) {
+                                if (ent1 % i == 0 && ent2 % i == 0) {
+                                    gcd = i;
+                                }
+                            }  
+                            Double d2=Double.valueOf(gcd);
+                            result = d2;  
+                            break;
                         default:
                             result = null;
                             break;
@@ -214,12 +225,16 @@ public class Calculator {
                 else{
                     calcStack.push(Double.valueOf(token));
                 }
-                }
-                this.result = calcStack.pop();
-            }else {
-                System.out.println("Unbalanced");
             }
+            this.result = calcStack.pop();
+    } catch (Exception e) {
+        System.out.println("Error");
+        if (balancedParenthensies(tokens) == false) {
+            System.out.println("Balance your equation");
+        }
+        System.out.println("");
     }
+}
    
     // Print the expression, terms, and result
     public String toString() {
@@ -247,5 +262,11 @@ public class Calculator {
         System.out.println("Division Math\n" + divisionMath);
         Calculator exponentMath = new Calculator("5^2");
         System.out.println("Division Math\n" + exponentMath);
+    
+        Calculator sqrtMath = new Calculator("5 sqrt 2");
+        System.out.println("Exponent Math\n" + sqrtMath);
+        System.out.println();
+        Calculator gcdMath = new Calculator("12 GCD 8");
+        System.out.println("Greatest Common Denominator\n" + gcdMath);
     }
 }

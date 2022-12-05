@@ -89,7 +89,7 @@ public class Person {
     public String ageString(){
         return ("{ \"age\": "  +this.getAge()+" }");
     }
-    public String personData(){
+    public String toString(){
         return ( "{ \"email\": "  +this.email+  ", " + "\"password\": "  +this.password+", " + "\"name\": "  +this.name+ ", " + "\"dob\": "  +this.dob+ ", " + "\"height\": "  +this.height+", " + "\"weight\": "  +this.weight+" }" );
     }
     
