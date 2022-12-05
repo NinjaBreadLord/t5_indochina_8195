@@ -58,23 +58,28 @@ public class Calculator {
         // find the token in the hash map
         return SEPARATORS.containsKey(token);
     }
-    public static boolean balancedParenthensies(ArrayList<String> s) {
-        int open = 0;
-        int close = 0;
-        for (String token : s) {
-            if (token == "(") {
-                open++;
-            } else if (token == ")") {
-                close++;
+    public boolean balancedParenthensies(ArrayList<String> tokens) {
+        // Counters for the number of open delimiters and close delimiters
+        int openCount = 0;
+        int closeCount = 0;
+        for (int i = 0; i < tokens.size(); i++) {
+            if (tokens.get(i).equals("(")) {
+                openCount++;
+            } else if (tokens.get(i).equals(")")) {
+                closeCount++;
             }
-            if (open < close) {
+
+            // First condition is broken
+            if (openCount < closeCount) {
                 return false;
             }
         }
-        if (open == close) {
+        // First and second condition are both met
+        if (openCount == closeCount) {
             return true;
         } 
         
+        // Second condition is broken
         else {
             return false;
         }
