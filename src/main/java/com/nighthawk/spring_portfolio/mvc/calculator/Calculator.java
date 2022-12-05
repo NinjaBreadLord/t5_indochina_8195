@@ -23,7 +23,7 @@ public class Calculator {
         // Map<"token", precedence>
         OPERATORS.put("*", 3);
         OPERATORS.put("除", 3);
-        OPERATORS.put("%", 3);
+        OPERATORS.put("％", 3);
         OPERATORS.put("+", 4);
         OPERATORS.put("-", 4);
         OPERATORS.put("^", 1);
@@ -59,29 +59,25 @@ public class Calculator {
         return SEPARATORS.containsKey(token);
     }
     public static boolean balancedParenthensies(ArrayList<String> s) {
-        Stack<Character> stack  = new Stack<Character>();
-        for(int i = 0; i < s.size(); i++) {
-            String x = s.get(i);
-            for(int j =0; j < x.length(); j++){
-                char c = x.charAt(j);
-                if(c == '[' || c == '(' || c == '{' ) {     
-                    stack.push(c);
-                } else if(c == ']') {
-                    if(stack.isEmpty() || stack.pop() != '[') {
-                        return false;
-                    }
-                } else if(c == ')') {
-                    if(stack.isEmpty() || stack.pop() != '(') {
-                        return false;
-                    }           
-                } else if(c == '}') {
-                    if(stack.isEmpty() || stack.pop() != '{') {
-                        return false;
-                    }
-                }
+        int open = 0;
+        int close = 0;
+        for (String token : s) {
+            if (token == "(") {
+                open++;
+            } else if (token == ")") {
+                close++;
+            }
+            if (open < close) {
+                return false;
             }
         }
-        return stack.isEmpty();
+        if (open == close) {
+            return true;
+        } 
+        
+        else {
+            return false;
+        }
     }
     // Compare precedence of operators.
     private Boolean isPrecedent(String token1, String token2) {
@@ -143,7 +139,7 @@ public class Calculator {
                 case "-":
                 case "*":
                 case "除":
-                case "%":
+                case "％":
                     // While stack
                     // not empty AND stack top element
                     // and is an operator
@@ -173,7 +169,7 @@ public class Calculator {
         // stack is used to hold operands and each calculation
         Stack<Double> calcStack = new Stack<Double>();
         // RPN is processed, ultimately calcStack has final result
-        if(balancedParenthensies(reverse_polish) == true){
+        if(balancedParenthensies(this.tokens)){
             for (String token : this.reverse_polish){
                 // If the token is an operator, calculate
                 if (isOperator(token))
@@ -196,7 +192,7 @@ public class Calculator {
                         case "除":
                             result = ent2 / ent1;
                             break;
-                        case "%":
+                        case "％":
                             result = ent2 % ent1;
                             break;
                         case "^":
@@ -239,7 +235,7 @@ public class Calculator {
         Calculator decimalMath = new Calculator("100.2 - 99.3");
         System.out.println("Decimal Math\n" + decimalMath);
         System.out.println();
-        Calculator moduloMath = new Calculator("300 % 200");
+        Calculator moduloMath = new Calculator("300 ％ 200");
         System.out.println("Modulo Math\n" + moduloMath);
         System.out.println();
         Calculator divisionMath = new Calculator("300除200");
