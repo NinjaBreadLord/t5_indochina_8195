@@ -22,7 +22,7 @@ public class Calculator {
     {
         // Map<"token", precedence>
         OPERATORS.put("*", 3);
-        OPERATORS.put("是", 3);
+        OPERATORS.put("除", 3);
         OPERATORS.put("%", 3);
         OPERATORS.put("+", 4);
         OPERATORS.put("-", 4);
@@ -142,7 +142,7 @@ public class Calculator {
                 case "+":
                 case "-":
                 case "*":
-                case "是":
+                case "除":
                 case "%":
                     // While stack
                     // not empty AND stack top element
@@ -173,48 +173,49 @@ public class Calculator {
         // stack is used to hold operands and each calculation
         Stack<Double> calcStack = new Stack<Double>();
         // RPN is processed, ultimately calcStack has final result
+        if(balancedParenthensies(reverse_polish) == true){
         for (String token : this.reverse_polish)
-        {
-            // If the token is an operator, calculate
-            if (isOperator(token))
             {
-                // Pop the two top entries
-                Double ent1 = Double.valueOf(calcStack.pop());
-                Double ent2 = Double.valueOf(calcStack.pop());
-                // Calculate intermediate results
-                result = 0.0;
-                switch(token) {
-                    case "+":
-                        result = ent1 + ent2;
-                        break;
-                    case "-":
-                        result = ent2 - ent1;
-                        break;
-                    case "*":
-                        result = ent1 * ent2;
-                        break;
-                    case "是":
-                        result = ent2 / ent1;
-                        break;
-                    case "%":
-                        result = ent2 % ent1;
-                        break;
-                    case "^":
-                        result = Math.pow(ent2, ent1);
-                        break;
-                    default:
-                        result = null;
-                        break;
+                // If the token is an operator, calculate
+                if (isOperator(token))
+                {
+                    // Pop the two top entries
+                    Double ent1 = Double.valueOf(calcStack.pop());
+                    Double ent2 = Double.valueOf(calcStack.pop());
+                    // Calculate intermediate results
+                    result = 0.0;
+                    switch(token) {
+                        case "+":
+                            result = ent1 + ent2;
+                            break;
+                        case "-":
+                            result = ent2 - ent1;
+                            break;
+                        case "*":
+                            result = ent1 * ent2;
+                            break;
+                        case "除":
+                            result = ent2 / ent1;
+                            break;
+                        case "%":
+                            result = ent2 % ent1;
+                            break;
+                        case "^":
+                            result = Math.pow(ent2, ent1);
+                            break;
+                        default:
+                            result = null;
+                            break;
+                    }
+                    // Push intermediate result back onto the stack
+                    calcStack.push( result );
                 }
-                // Push intermediate result back onto the stack
-                calcStack.push( result );
+                // else the token is a number push it onto the stack
+                else{
+                    calcStack.push(Double.valueOf(token));
+                }
+                }
             }
-            // else the token is a number push it onto the stack
-            else
-            {
-                calcStack.push(Double.valueOf(token));
-            }
-        }
         // Pop final result and set as final result for expression
         this.result = calcStack.pop();
     }
@@ -241,7 +242,7 @@ public class Calculator {
         Calculator moduloMath = new Calculator("300 % 200");
         System.out.println("Modulo Math\n" + moduloMath);
         System.out.println();
-        Calculator divisionMath = new Calculator("300是200");
+        Calculator divisionMath = new Calculator("300除200");
         System.out.println("Division Math\n" + divisionMath);
         Calculator exponentMath = new Calculator("5^2");
         System.out.println("Division Math\n" + exponentMath);
