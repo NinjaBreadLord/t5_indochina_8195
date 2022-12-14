@@ -229,7 +229,7 @@ public class LightBoard {
         System.out.println(lightBoard.toColorPalette(bHeight, bLength));
         
         LightBoard flagBoard = new LightBoard(5, 9);
-        flagBoard.flag("Germany");
+        flagBoard.flag("Belgium");
         System.out.println(flagBoard.toColorPalette(4, 4));
         flagBoard.flag("Russia");
         System.out.println(flagBoard.toColorPalette(4, 4));
