@@ -28,7 +28,9 @@ public class Calculator {
         OPERATORS.put("％", 3);
         OPERATORS.put("+", 4);
         OPERATORS.put("-", 4);
-        OPERATORS.put("^", 1);
+        OPERATORS.put("^", 3);
+        OPERATORS.put("sqrt", 1);
+        OPERATORS.put("GCD", 4);
 
     }
     // Helper definition for supported operators
@@ -139,13 +141,15 @@ public class Calculator {
                     while (tokenStack.peek() != null && !tokenStack.peek().equals("(")) {
                         reverse_polish.add(tokenStack.pop());
                     }
-                    tokenStack.pop();
+                    tokenStack.pop();   
                     break;
                 case "^":
                 case "+":
                 case "-":
                 case "*":
                 case "除":
+                case "GCD":
+                case "sqrt":
                 case "％":
                     // While stack
                     // not empty AND stack top element
@@ -244,5 +248,11 @@ public class Calculator {
         System.out.println("Division Math\n" + divisionMath);
         Calculator exponentMath = new Calculator("5^2");
         System.out.println("Division Math\n" + exponentMath);
+    
+        Calculator sqrtMath = new Calculator("5 sqrt 2");
+        System.out.println("Exponent Math\n" + sqrtMath);
+        System.out.println();
+        Calculator gcdMath = new Calculator("12 GCD 8");
+        System.out.println("Greatest Common Denominator\n" + gcdMath);
     }
 }
