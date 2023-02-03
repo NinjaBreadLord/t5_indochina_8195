@@ -238,10 +238,8 @@ public class Calculator {
    
     // Print the expression, terms, and result
     public String toString() {
-        return ("Original expression: " + this.expression + "\n" +
-                "Tokenized expression: " + this.tokens.toString() + "\n" +
-                "Reverse Polish Notation: " +this.reverse_polish.toString() + "\n" +
-                "Final result: " + String.format("%.2f", this.result));
+        return ("{ \"Expression\": \"" + this.expression + "\", \"Tokens\": \"" + this.tokens + 
+                "\", \"RPN\": \"" + this.reverse_polish + "\", \"Result\": " + this.result + " }");
     }
     // Tester method
     public static void main(String[] args) {
