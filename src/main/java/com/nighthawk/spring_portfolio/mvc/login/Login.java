@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Entity
 @TypeDef(name="json", typeClass = JsonType.class)
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
 public class Login {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,8 +42,8 @@ public class Login {
     // email, password, roles are key attributes to login and authentication
     @NotEmpty
     @Size(min=5)
-    @Column(unique=true)
     @Email
+    @Column(name="email")
     private String email;
     @NotEmpty
     private String password;
