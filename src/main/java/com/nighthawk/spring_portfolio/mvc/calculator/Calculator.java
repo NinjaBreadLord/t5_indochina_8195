@@ -7,7 +7,7 @@ import java.util.Stack;
 
 /* In mathematics,
     an expression or mathematical expression is a finite combination of symbols that is well-formed
-    according to rules that depend on the context.
+    according to rule that depend on the context.
    In computers,
     expression can be hard to calculate with precedence rules and user input errors
     to handle computer math we often convert strings into reverse polish notation
