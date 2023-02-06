@@ -151,6 +151,24 @@
             <artifactId>commonmark</artifactId>
             <version>0.17.2</version>
         </dependency>
+    
+      <dependency>
+        <groupId>com.inversoft</groupId>
+        <artifactId>barista</artifactId>
+        <version>1.1.2</version>
+      </dependency>
+    
+      <dependency>
+        <groupId>com.inversoft</groupId>
+        <artifactId>barista</artifactId>
+        <version>1.1.2</version>
+      </dependency>
+    
+      <dependency>
+        <groupId>com.microsoft.azure.cognitiveservices</groupId>
+        <artifactId>azure-cognitiveservices-imagesearch</artifactId>
+        <version>1.0.2</version>
+      </dependency>
     </dependencies>
 
     <build>
