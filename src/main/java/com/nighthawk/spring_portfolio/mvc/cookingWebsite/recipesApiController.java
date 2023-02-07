@@ -39,7 +39,7 @@ public class recipesApiController {
      */
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Object> deleteRecipes(@PathVariable long id) {
-        repository.deleteRecipe(id);
+        repository.delete(id);
         return new ResponseEntity<>( ""+ id +" deleted", HttpStatus.OK);
     }
 
@@ -47,10 +47,10 @@ public class recipesApiController {
     POST Aa record by Requesting Parameters from URI
      */
     @PostMapping( "/post/")
-    public ResponseEntity<Object> postPerson(@RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
+    public ResponseEntity<Object> postRecipe(@RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
                                              @RequestParam("description") String description) {
 
-        repository.saveRecipe(new Recipe(null, name, ingredients, description));
+        repository.save(new recipes(name, ingredients, description));
         return new ResponseEntity<>(name +" is created successfully", HttpStatus.CREATED);
     }
 
