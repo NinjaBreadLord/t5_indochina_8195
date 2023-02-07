@@ -1,5 +1,4 @@
 package com.nighthawk.spring_portfolio.mvc.cookingWebsite;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,19 +26,18 @@ public class recipesApiController {
     }
 
     /*
-    GET individual Car using ID
+    GET individual Car sing ID
      */
     @GetMapping("{id}")
-    public ResponseEntity<Recipes> getRecipes(@PathVariable long id) {
-        return new ResponseEntity<>( repository.getRecipe(id), HttpStatus.OK);
+    public ResponseEntity<Recipes> getRecipe(@PathVariable long id) {
+        return new ResponseEntity<>(repository.getRecipeId(id), HttpStatus.OK);
     }
-
     /*
     DELETE individual Car using ID
      */
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Object> deleteRecipes(@PathVariable long id) {
-        repository.deleteRecipe(id);
+        repository.deleteById(id);
         return new ResponseEntity<>( ""+ id +" deleted", HttpStatus.OK);
     }
 
