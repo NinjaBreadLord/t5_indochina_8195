@@ -6,17 +6,6 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD");
-            }
-        };
-    }    
     // set up your own index
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -32,6 +21,10 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/volumes/uploads/**").addResourceLocations("file:volumes/uploads/");
     }
 
-
-
+    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("https://ninjabreadlord.github.io", "http://localhost:8195", "http://127.0.0.1:4000");
+    }
+    
 }
