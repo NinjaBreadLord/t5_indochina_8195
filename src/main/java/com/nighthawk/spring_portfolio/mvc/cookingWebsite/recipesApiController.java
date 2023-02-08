@@ -32,8 +32,14 @@ public class recipesApiController {
     // public recipes getRecipes(Long id) {
     //     return new recipes("", "", "");
     // }
-    public ResponseEntity<Recipes> getRecipe(@PathVariable long id) {
-        return new ResponseEntity<>(repository.getRecipes(id), HttpStatus.OK);
+    // public ResponseEntity<Recipes> getRecipe(@PathVariable long id) {
+    //     return new ResponseEntity<>(repository.getRecipes(id), HttpStatus.OK);
+    // }
+
+    public Recipes getRecipe(long id) {
+        return (repository.findById(id).isPresent())
+                ? repository.findById(id).get()
+                : null;
     }
 
     /*
