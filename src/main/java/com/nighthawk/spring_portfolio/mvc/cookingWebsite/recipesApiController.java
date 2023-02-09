@@ -35,13 +35,12 @@ public class recipesApiController {
     // public ResponseEntity<Recipes> getRecipe(@PathVariable long id) {
     //     return new ResponseEntity<>(repository.getRecipes(id), HttpStatus.OK);
     // }
-
+    @GetMapping("{id}") 
     public Recipes getRecipe(long id) {
         return (repository.findById(id).isPresent())
                 ? repository.findById(id).get()
                 : null;
     }
-
     /*
     DELETE individual Car using ID
      */
