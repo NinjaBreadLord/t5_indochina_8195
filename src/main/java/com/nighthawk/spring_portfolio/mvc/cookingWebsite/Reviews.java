@@ -16,10 +16,6 @@ public class Reviews {
 
     private List<Review> reviews = new ArrayList<>();
 
-    public static void main(String[] args) {
-        SpringApplication.run(Reviews.class, args);
-    }
-
     @GetMapping("/api/reviews")
     public List<Review> getReviews() {
         return reviews;
@@ -68,4 +64,5 @@ public class Reviews {
             this.rating = rating;
         }
     }
+    
 }
