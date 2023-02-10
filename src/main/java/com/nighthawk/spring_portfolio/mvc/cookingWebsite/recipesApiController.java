@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 @RequestMapping("/api/recipes/")
 public class recipesApiController {
 
-    @Autowired 
+    @Autowired
     recipesJPARepository repository;
 
     @GetMapping("all")
@@ -43,7 +43,7 @@ public class recipesApiController {
     }
 
     /*
-    DELETE individual Car using ID
+     * DELETE individual Car using ID
      */
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Object> deleteRecipes(@PathVariable long id) {
@@ -55,7 +55,7 @@ public class recipesApiController {
         repository.save(recipes);
     }
     /*
-    POST Aa record by Requesting Parameters from URI
+     * POST Aa record by Requesting Parameters from URI
      */
     @PostMapping( "/post/")
     public ResponseEntity<Object> postRecipes(@RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
@@ -64,6 +64,5 @@ public class recipesApiController {
         saveRecipes(new Recipes(null, name, ingredients, description));
         return new ResponseEntity<>(name +" is created successfully", HttpStatus.CREATED);
     }
-
 
 }
