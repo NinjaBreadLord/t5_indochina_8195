@@ -32,8 +32,9 @@ import java.util.ArrayList;
 
 @Data 
 @Entity
+@AllArgsConstructor
 @Table(name="RECIPES") 
-public class recipes {
+public class Recipes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -47,9 +48,11 @@ public class recipes {
     @Column(unique=true)
     private String description;
 
-    public recipes(String name, String ingredients, String description){
+    public Recipes(String name, String ingredients, String description){
         this.name = name;
         this.ingredients = ingredients; 
         this.description = description; 
     }
+
+ 
 }
