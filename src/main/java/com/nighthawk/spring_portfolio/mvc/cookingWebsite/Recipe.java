@@ -13,12 +13,13 @@
 // import org.springframework.http.ResponseEntity;
 // import org.springframework.web.bind.annotation.*;
 
-// @RestController 
-// @RequestMapping("/api/recipe")  
-// public class Recipe {
-//     private JSONObject body; 
-//     private HttpStatus status; 
-//     String last_run = null; 
+@RestController 
+@RequestMapping("/api/recipe")  
+public class Recipe {
+    
+    private JSONObject body; 
+    private HttpStatus status; 
+    String last_run = null; 
 
 //     public ResponseEntity<JSONObject> getRecipe() {
 
