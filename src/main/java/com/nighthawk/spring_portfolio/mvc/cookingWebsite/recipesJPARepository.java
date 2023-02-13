@@ -9,6 +9,5 @@ import java.util.List;
 public interface recipesJPARepository extends JpaRepository<Recipes, Long> {
     Recipes findByName(String name);
     List<Recipes> findAllByOrderByNameAsc();
-    // Recipes getRecipes(Long id);
     List<Recipes> findAll();
 }

@@ -1,13 +1,7 @@
 package com.nighthawk.spring_portfolio.mvc.cookingWebsite;
 
-import java.text.*;
-import java.util.Calendar;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,9 +25,9 @@ import java.util.ArrayList;
 
 
 @Data 
-@Entity
 @AllArgsConstructor
 @Table(name="RECIPES") 
+@Entity
 public class Recipes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,5 +48,5 @@ public class Recipes {
         this.description = description; 
     }
 
- 
+    
 }
