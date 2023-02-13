@@ -42,10 +42,14 @@ public class Recipes {
     @Column(unique=true)
     private String description;
 
-    public Recipes(String name, String ingredients, String description){
+    @Column(unique=true)
+    private String country;
+
+    public Recipes(String name, String ingredients, String description, String country){
         this.name = name;
         this.ingredients = ingredients; 
         this.description = description; 
+        this.country = country;
     }
 
     
