@@ -1,3 +1,5 @@
+import org.springframework.web.bind.annotation.RequestMapping;
+
 // package com.nighthawk.spring_portfolio.mvc.cookingWebsite;
 
 // import java.net.URI;
@@ -13,13 +15,13 @@
 // import org.springframework.http.ResponseEntity;
 // import org.springframework.web.bind.annotation.*;
 
-@RestController 
-@RequestMapping("/api/recipe")  
-public class Recipe {
+// @RestController 
+// @RequestMapping("/api/recipe")  
+// public class Recipe {
     
-    private JSONObject body; 
-    private HttpStatus status; 
-    String last_run = null; 
+//    private JSONObject body; 
+//    private HttpStatus status; 
+//    String last_run = null; 
 
 //     public ResponseEntity<JSONObject> getRecipe() {
 
