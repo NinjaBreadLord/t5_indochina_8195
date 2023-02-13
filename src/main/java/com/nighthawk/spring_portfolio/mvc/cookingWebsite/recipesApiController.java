@@ -65,4 +65,14 @@ public class recipesApiController {
         return new ResponseEntity<>(name +" is created successfully", HttpStatus.CREATED);
     }
 
+    /* 
+    @GetMapping( "/tags/")
+    public ResponseEntity<Object> tagRecipes(@RequestParam("country") String country) {
+                return (repository.findByCountry(country).isPresent())
+                ? repository.findByCountry(country).get()
+                : null;
+    }
+    */
+
 }
+
