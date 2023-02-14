@@ -1,6 +1,6 @@
-// import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.web.bind.annotation.RequestMapping;
 
-// // package com.nighthawk.spring_portfolio.mvc.cookingWebsite;
+// package com.nighthawk.spring_portfolio.mvc.cookingWebsite;
 
 // // import java.net.URI;
 // // import java.net.http.HttpClient;
@@ -19,9 +19,9 @@
 // @RequestMapping("/api/recipe")  
 // public class Recipe {
     
-//     private JSONObject body; 
-//     private HttpStatus status; 
-//     String last_run = null; 
+//    private JSONObject body; 
+//    private HttpStatus status; 
+//    String last_run = null; 
 
 // //     public ResponseEntity<JSONObject> getRecipe() {
 

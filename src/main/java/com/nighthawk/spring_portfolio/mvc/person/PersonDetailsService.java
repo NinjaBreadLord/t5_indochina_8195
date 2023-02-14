@@ -1,12 +1,21 @@
 package com.nighthawk.spring_portfolio.mvc.person;
 
+import com.nighthawk.spring_portfolio.mvc.person.Person;
+import com.nighthawk.spring_portfolio.mvc.person.PersonJpaRepository;
+import com.nighthawk.spring_portfolio.mvc.person.PersonRole;
+import com.nighthawk.spring_portfolio.mvc.person.PersonRoleJpaRepository;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,34 +33,37 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
     @Autowired  // Inject PersonJpaRepository
     private PersonJpaRepository personJpaRepository;
     @Autowired  // Inject RoleJpaRepository
-    private PersonRoleJpaRepository personRoleJpaRepository;
+    private PersonRoleJpaRepository roleJpaRepository;
+
+
+
+    // Setup Password style for Database storing and lookup
     @Autowired  // Inject PasswordEncoder
     private PasswordEncoder passwordEncoder;
+    @Bean  // Sets up password encoding style
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     /* UserDetailsService Overrides and maps Person & Roles POJO into Spring Security */
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Person person = personJpaRepository.findByEmail(email); // setting variable user equal to the method finding the username in the database
-        if(person==null) {
-			throw new UsernameNotFoundException("User not found with username: " + email);
+        if(person==null){
+            throw new UsernameNotFoundException("User not found in database");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         person.getRoles().forEach(role -> { //loop through roles
             authorities.add(new SimpleGrantedAuthority(role.getName())); //create a SimpleGrantedAuthority by passed in role, adding it all to the authorities list, list of roles gets past in for spring security
         });
-        // train spring security to User and Authorities
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), authorities);
     }
+
 
     /* Person Section */
 
     public  List<Person>listAll() {
         return personJpaRepository.findAllByOrderByNameAsc();
-    }
-
-    // custom query to find match to name or email
-    public  List<Person>list(String name, String email) {
-        return personJpaRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(name, email);
     }
 
     // custom query to find anything containing term in name or email ignoring case
@@ -65,7 +77,6 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
         return personJpaRepository.findByLikeTermNative(like_term);
     }
 
-    // encode password prior to sava
     public void save(Person person) {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         personJpaRepository.save(person);
@@ -91,7 +102,7 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
                 person.setPassword(passwordEncoder.encode(password));
             }
             if (person.getRoles().isEmpty()) {
-                PersonRole role = personRoleJpaRepository.findByName(roleName);
+                PersonRole role = roleJpaRepository.findByName(roleName);
                 if (role != null) { // verify role
                     person.getRoles().add(role);
                 }
@@ -103,24 +114,24 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
     /* Roles Section */
 
     public void saveRole(PersonRole role) {
-        PersonRole roleObj = personRoleJpaRepository.findByName(role.getName());
+        PersonRole roleObj = roleJpaRepository.findByName(role.getName());
         if (roleObj == null) {  // only add if it is not found
-            personRoleJpaRepository.save(role);
+            roleJpaRepository.save(role);
         }
     }
 
     public  List<PersonRole>listAllRoles() {
-        return personRoleJpaRepository.findAll();
+        return roleJpaRepository.findAll();
     }
 
     public PersonRole findRole(String roleName) {
-        return personRoleJpaRepository.findByName(roleName);
+        return roleJpaRepository.findByName(roleName);
     }
 
     public void addRoleToPerson(String email, String roleName) { // by passing in the two strings you are giving the user that certain role
         Person person = personJpaRepository.findByEmail(email);
         if (person != null) {   // verify person
-            PersonRole role = personRoleJpaRepository.findByName(roleName);
+            PersonRole role = roleJpaRepository.findByName(roleName);
             if (role != null) { // verify role
                 boolean addRole = true;
                 for (PersonRole roleObj : person.getRoles()) {    // only add if user is missing role
@@ -133,5 +144,6 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
             }
         }
     }
-    
+
 }
+ 
