@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.nighthawk.spring_portfolio.mvc.cookingWebsite.recipesJPARepository;
+// import com.nighthawk.spring_portfolio.mvc.cookingWebsite.recipesJPARepository;
 import com.nighthawk.spring_portfolio.mvc.jokes.Jokes;
 import com.nighthawk.spring_portfolio.mvc.jokes.JokesJpaRepository;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @Component // Scans Application for ModelInit Bean, this detects CommandLineRunner
 public class ModelInit {  
     @Autowired JokesJpaRepository repository;
-    @Autowired recipesJPARepository recipeRepository;
+//    @Autowired recipesJPARepository recipeRepository;
 
     @Bean
     CommandLineRunner run() {  // The run() method will be executed after the application starts
