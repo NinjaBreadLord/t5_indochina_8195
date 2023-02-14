@@ -47,6 +47,16 @@ public class Recipes {
         this.ingredients = ingredients; 
         this.description = description; 
     }
+    public static Recipes[] init(){
+        Recipes GrilledCheese = new Recipes("Grilled Cheese","Bread, Cheese","It is very tasty");
 
-    
+        Recipes recipes[] = {GrilledCheese};
+        return(recipes);
+    }
+    public static void main(String[] args){
+        Recipes recipes[] = init();
+        for (Recipes recipe: recipes){
+            System.out.println(recipe);
+        }
+    }
 }
