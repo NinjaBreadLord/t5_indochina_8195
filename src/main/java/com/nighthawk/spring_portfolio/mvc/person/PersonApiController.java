@@ -21,14 +21,14 @@ public class PersonApiController {
 
     // Autowired enables Control to connect POJO Object through JPA
     @Autowired
-    private PersonJpaRepository repository;
+    private PersonDetailsService repository;
 
     /*
     GET List of People
      */
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPeople() {
-        return new ResponseEntity<>( repository.findAllByOrderByNameAsc(), HttpStatus.OK);
+        return new ResponseEntity<>( repository.listAll(), HttpStatus.OK);
     }
 
     /*
@@ -36,28 +36,16 @@ public class PersonApiController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Person> getPerson(@PathVariable long id) {
-        Optional<Person> optional = repository.findById(id);
-        if (optional.isPresent()) {  // Good ID
-            Person person = optional.get();  // value from findByID
-            return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
-        }
-        // Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
-    }
+        return new ResponseEntity<>( repository.get(id), HttpStatus.OK);
+}
 
     /*
     DELETE individual Person using ID
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Person> deletePerson(@PathVariable long id) {
-        Optional<Person> optional = repository.findById(id);
-        if (optional.isPresent()) {  // Good ID
-            Person person = optional.get();  // value from findByID
-            repository.deleteById(id);  // value from findByID
-            return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
-        }
-        // Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+    public ResponseEntity<Object> deletePerson(@PathVariable long id) {
+        repository.delete(id);
+        return new ResponseEntity<>( ""+ id +" deleted", HttpStatus.OK);
     }
 
     /*
@@ -83,47 +71,10 @@ public class PersonApiController {
     /*
     The personSearch API looks across database for partial match to term (k,v) passed by RequestEntity body
      */
-    @PostMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> personSearch(@RequestBody final Map<String,String> map) {
-        // extract term from RequestEntity
-        String term = (String) map.get("term");
 
-        // JPA query to filter on term
-        List<Person> list = repository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(term, term);
-
-        // return resulting list and status, error checking should be added
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
 
     /*
     The personStats API adds stats by Date to Person table 
     */
-    @PostMapping(value = "/setStats", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> personStats(@RequestBody final Map<String,Object> stat_map) {
-        // find ID
-        long id=Long.parseLong((String)stat_map.get("id"));  
-        Optional<Person> optional = repository.findById((id));
-        if (optional.isPresent()) {  // Good ID
-            Person person = optional.get();  // value from findByID
 
-            // Extract Attributes from JSON
-            Map<String, Object> attributeMap = new HashMap<>();
-            for (Map.Entry<String,Object> entry : stat_map.entrySet())  {
-                // Add all attribute other thaN "date" to the "attribute_map"
-                if (!entry.getKey().equals("date") && !entry.getKey().equals("id"))
-                    attributeMap.put(entry.getKey(), entry.getValue());
-            }
-
-            // Set Date and Attributes to SQL HashMap
-            Map<String, Map<String, Object>> date_map = new HashMap<>();
-            date_map.put( (String) stat_map.get("date"), attributeMap );
-            person.setStats(date_map);  // BUG, needs to be customized to replace if existing or append if new
-            repository.save(person);  // conclude by writing the stats updates
-
-            // return Person with update Stats
-            return new ResponseEntity<>(person, HttpStatus.OK);
-        }
-        // return Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
-    }
 }
