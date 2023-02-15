@@ -47,21 +47,38 @@ public class recipesApiController {
 
     @PostMapping( "/post/")
     public ResponseEntity<Object> postRecipes(@RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
-                                             @RequestParam("description") String description) {
+                                             @RequestParam("description") String description, Integer vegetarian, Integer nonVegetarian) {
 
-        saveRecipes(new Recipes(null, name, ingredients, description));
+        saveRecipes(new Recipes(null, name, ingredients, description,vegetarian,nonVegetarian));
         return new ResponseEntity<>(name +" is created successfully", HttpStatus.CREATED);
     }
 
     /* 
     @GetMapping( "/country/")
     public ResponseEntity<Object> tagRecipes(@RequestParam("country") String country) {
-                return (repository.findByCountry(country).isPresent())
-                ? repository.findByCountry(country).get()
+                return (repository.findAllByCountry(country) != null)
+                ? new ResponseEntity<>(repository.findAllByCountry(country), HttpStatus.OK)
                 : null;
     }
 
-    */
+    @GetMapping( "/vegetarian/" ) 
+    public ResponseEntity<Recipes> typeOfRecipesVeg(@RequestParam("vegetarian") Integer vegetarian) {
+                return (repository.findAllByTypeVeg(vegetarian) != null)
+                ? new ResponseEntity<>(repository.findAllByTypeVeg(vegetarian), HttpStatus.OK)
+                : null;
+
+    }
     
+
+    @GetMapping( "/nonVegetarian/" ) 
+        public ResponseEntity<Recipes> typeOfRecipesNon(@RequestParam("nonVegetarian") Integer nonVegetarian) {
+                    return (repository.findAllByTypeNon(nonVegetarian) != null)
+                    ? new ResponseEntity<>(repository.findAllByTypeNon(nonVegetarian), HttpStatus.OK)
+                    : null;
+        }
+    */
+
+
 }
+
 
