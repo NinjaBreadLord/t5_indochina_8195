@@ -46,18 +46,18 @@ public class Recipes {
     private String country;
 
     @Column(unique=true)
-    private Integer vegetarian;
+    private String typeVeg;
 
     @Column(unique=true)
-    private Integer nonVegetarian;
+    private String typeNonVeg;
 
-    public Recipes(String name, String ingredients, String description, String country, Integer vegetarian, Integer nonVegetarian){
+    public Recipes(String name, String ingredients, String description, String country, String typeVeg, String typeNonVeg){
         this.name = name;
         this.ingredients = ingredients; 
         this.description = description; 
         this.country = country;
-        this.vegetarian = vegetarian;
-        this.nonVegetarian = nonVegetarian;
+        this.typeVeg = typeVeg;
+        this.typeNonVeg = typeNonVeg;
     }
 
     
