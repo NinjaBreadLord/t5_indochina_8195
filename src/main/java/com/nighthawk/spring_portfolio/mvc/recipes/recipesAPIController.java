@@ -46,7 +46,7 @@ public class recipesAPIController {
     public ResponseEntity<Object> postRecipes(@RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
                                              @RequestParam("description") String description, @RequestParam("region") String region, @RequestParam("preparation") int preparation) {
 
-        saveRecipes(new recipes(null, name, ingredients, description,region,preparation));
+        saveRecipes(new recipes(null, name, ingredients, description, region, preparation));
         return new ResponseEntity<>(name +" is created successfully", HttpStatus.CREATED);
     }
     
