@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: java_springv1
+    image: java_indochina_v1
     build: .
     ports:
       - "8195:8195"
