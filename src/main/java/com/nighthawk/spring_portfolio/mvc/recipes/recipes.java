@@ -47,17 +47,13 @@ public class recipes {
 
     @Column(unique=true)
     private int preparation;
-    
-    @Column(unique=true)
-    private String vegetarian;
 
-    public recipes(String name, String ingredients, String description,String region, int preparation, String vegetarian){
+    public recipes(String name, String ingredients, String description,String region, int preparation){
         this.name = name;
         this.ingredients = ingredients; 
         this.description = description; 
         this.region = region;
         this.preparation = preparation;
-        this.vegetarian = vegetarian;
     }
 
     public recipes(){
@@ -65,7 +61,7 @@ public class recipes {
     }
 
     public static recipes[] init(){
-        recipes GrilledCheese = new recipes("Grilled Cheese","Bread, Cheese","It is very tasty","The Americas",10,"vegetarian");
+        recipes GrilledCheese = new recipes("Grilled Cheese","Bread, Cheese","It is very tasty","The Americas",10);
 
         recipes recipes[] = {GrilledCheese};
         return(recipes);

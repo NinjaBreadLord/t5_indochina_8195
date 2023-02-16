@@ -41,18 +41,12 @@ public class recipesAPIController {
         repository.save(recipes);
     }
 
-    /* 
-    @GetMapping("/vegeterian")
-    public ResponseEntity<List<recipes>> getAllRecipesVeg() {
-        return new ResponseEntity<>(repository.findAllVeg(), HttpStatus.OK);
-    } 
-    */
 
     @PostMapping( "/post/")
     public ResponseEntity<Object> postRecipes(@RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
-                                             @RequestParam("description") String description, @RequestParam("region") String region, @RequestParam("preparation") int preparation, @RequestParam("vegetarian") String vegetarian) {
+                                             @RequestParam("description") String description, @RequestParam("region") String region, @RequestParam("preparation") int preparation) {
 
-        saveRecipes(new recipes(null, name, ingredients, description,region,preparation,vegetarian));
+        saveRecipes(new recipes(null, name, ingredients, description,region,preparation));
         return new ResponseEntity<>(name +" is created successfully", HttpStatus.CREATED);
     }
     
