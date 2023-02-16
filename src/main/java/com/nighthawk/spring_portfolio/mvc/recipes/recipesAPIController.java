@@ -31,10 +31,7 @@ public class recipesAPIController {
                 : null;
     }
 
-    /*
-     * DELETE individual Car using ID
-     */
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deleteRecipes(@PathVariable Long id) {
         repository.deleteById(id);  
         return new ResponseEntity<>( ""+ id +" deleted", HttpStatus.OK);
