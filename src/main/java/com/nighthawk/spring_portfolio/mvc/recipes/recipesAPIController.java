@@ -41,21 +41,11 @@ public class recipesAPIController {
         repository.save(recipes);
     }
 
-    /*
-    @GetMapping("/vegeterian")
-    public ResponseEntity<List<recipes>> getAllRecipesVeg() {
-        return new ResponseEntity<>(repository.findAllByVegetarian(true), HttpStatus.OK);
-    } 
-    */
-    
-    
     @GetMapping("/region")
     public ResponseEntity<List<recipes>> getAllRecipesRegion(@RequestParam("region") String region) {
         return new ResponseEntity<>(repository.findAllByRegion(region), HttpStatus.OK);
     } 
     
-
-
     @PostMapping( "/post/")
     public ResponseEntity<Object> postRecipes(@RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
                                              @RequestParam("description") String description, @RequestParam("region") String region, @RequestParam("preparation") int preparation) {
