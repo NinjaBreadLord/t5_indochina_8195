@@ -10,4 +10,5 @@ public interface recipesJpaRepository extends JpaRepository<recipes, Long> {
     recipes findByName(String name);
     List<recipes> findAllByOrderByNameAsc();
     List<recipes> findAll();
+    List<recipes> findAllByRegion(String region);
 }
