@@ -42,7 +42,7 @@ public class recipesAPIController {
     }
 
     
-    @PostMapping( "updateRecipes/{id}")
+    @PostMapping( "/updateRecipes/{id}")
     public ResponseEntity<Object> updateRecipes(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
                                              @RequestParam("description") String description, @RequestParam("region") String region, @RequestParam("preparation") int preparation) {
         recipes recipeedit = repository.getRecipe(id);
