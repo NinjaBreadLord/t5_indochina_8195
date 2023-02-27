@@ -22,6 +22,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 @Data 
@@ -73,4 +76,5 @@ public class recipes {
             System.out.println(recipe);
         }
     }
+
 }

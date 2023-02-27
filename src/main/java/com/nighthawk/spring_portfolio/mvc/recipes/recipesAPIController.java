@@ -41,6 +41,20 @@ public class recipesAPIController {
         repository.save(recipes);
     }
 
+    
+    @PostMapping( "updateRecipes/{id}")
+    public ResponseEntity<Object> updateRecipes(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
+                                             @RequestParam("description") String description, @RequestParam("region") String region, @RequestParam("preparation") int preparation) {
+        recipes recipeedit = repository.getRecipe(id);
+        recipeedit.setIngredients(ingredients);
+        recipeedit.setDescription(description);
+        recipeedit.setRegion(region);
+        recipeedit.setPreparation(preparation);
+        return new ResponseEntity<>(name +" is updated successfully", HttpStatus.ACCEPTED);
+
+    }
+
+
     @PostMapping( "/post/")
     public ResponseEntity<Object> postRecipes(@RequestParam("name") String name, @RequestParam("ingredients") String ingredients,
                                              @RequestParam("description") String description, @RequestParam("region") String region, @RequestParam("preparation") int preparation) {

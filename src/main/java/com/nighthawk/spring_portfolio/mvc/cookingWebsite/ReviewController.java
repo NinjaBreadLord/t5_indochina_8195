@@ -1,5 +1,9 @@
 package com.nighthawk.spring_portfolio.mvc.cookingWebsite;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +30,17 @@ public class ReviewController {
   public List<Review> getReviews() {
     return reviews;
   }
+
+  @ControllerAdvice
+  public class CustomExceptionHandler {
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
+        ErrorResponse error = new ErrorResponse();
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+}
+
 }
 
 @Data
